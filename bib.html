@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro de Livros</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de livros</h1>
+        <h5>Cadastre um livro aqui!⬇️⬇️</h5>
+        <input id="nomeLivro" placeholder="Nome" type="text">
+        <input id="autorLivro" placeholder="Autor" type="text">
+        <input id="anoLivro" placeholder="Ano" type="number">
+        <button onclick="adicionar()">Adicionar Livro</button>
+        <button onclick="mostrarLivros()">Mostrar</button>
+    </div>
+    <div id="listaLivros" class="container">
+        <h2>Livros Salvos</h2>
+        <ul id="livros">
+        </ul>
+    </div>
+
+    <div class="carrosel">
+        <img id="carroselImagem" src="" alt="Imagem do Carrosel">
+        <div class="botoes">
+        <button id="anterior">Anterior</button>
+        <button id="proxima">Próxima</button>
+    </div>
+    </div>
+    <script>
+        let imgIndice = 0
+        const IMAGENS = ['image1.jpg', 'image2.jpg','image3.jpg', 'image4.jpg'];
+        const prevButton = document.getElementById('anterior');
+        const nextButton = document.getElementById('proxima');
+
+        var IMG = document.getElementById('carroselImagem');
+
+        function carregar() {
+            IMG.src = IMAGENS[imgIndice]
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (imgIndice > 0)
+            --imgIndice
+            //imgIndice = imgIndice - 1;
+            carregar();
+        });
+
+        nextButton.addEventListener('click', () => {
+            var limite=(IMAGENS.length)-1
+            if (imgIndice < limite) {
+            ++imgIndice
+            //imgIndice = imgIndice + 1;
+            carregar();
+            }
+        })
+        carregar();
+
+
+    </script>
+
+    <script>
+        let biblioteca = [];
+
+        function cadastro(nome, autor, ano){
+            var livro = {
+                titulo: nome,
+                autor: autor,
+                ano: ano,
+            };
+            biblioteca.push(livro);
+        }
+
+        function adicionar(){
+            let nome = document.getElementById('nomeLivro').value;
+            let autor = document.getElementById('autorLivro').value;
+            let ano = document.getElementById('anoLivro').value;
+            cadastro(nome, autor, ano);
+        }
+
+        function mostrarLivros() {
+            let listaLivros = document.getElementById('livros');
+            listaLivros.innerHTML = ""; // Limpa a lista antes de exibir novamente
+
+            for (let i = 0; i < biblioteca.length; i++) {
+                let livro = biblioteca[i];
+                let listItem = document.createElement('li');
+                listItem.textContent = `${livro.titulo} - ${livro.autor} (${livro.ano})`;
+                listaLivros.appendChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>
